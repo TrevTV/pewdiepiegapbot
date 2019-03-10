@@ -4,7 +4,7 @@ import time
 
 a = 0
 
-key = "put your google api key here they are easy to get"
+key = "Put your Google API key here"
 
 
 name = "PewDiePie"
@@ -23,7 +23,6 @@ t = "{:,d}".format(int(subs))
 t = t.replace(',', '')
 t = int(t)
 
+
 b = a
 a = p - t
-
-print(a)
