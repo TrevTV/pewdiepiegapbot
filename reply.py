@@ -29,12 +29,13 @@ async def on_ready():
 @client.command()
 async def gap():
     importlib.reload(count)
+    print("Sending the gap to chat")
     await client.say('The gap is currently at' + ' ' + str(count.a) + " " + 'with' + " " + str(w) + " " + "winning!")
 
 
 @client.command()
 async def subcount(arg):
-    key = "Put your Google API key here"
+    key = "put your google api key here"
     yt = arg
     data = urllib.request.urlopen(
         "https://www.googleapis.com/youtube/v3/channels?part=statistics&forUsername=" + str(yt) + "&key=" + key).read()
@@ -42,9 +43,17 @@ async def subcount(arg):
     pp = "{:,d}".format(int(subs))
     pp = pp.replace(',', '')
     pp = int(pp)
-    print(pp)
+    print('Sending' + " " + yt + "'s" + " " + "to chat")
     await client.say(str(yt) + " " + 'is currently at' + " " + str(pp) + " " + 'subscribers.')
 
 
-client.run('Put your Discord bot token here')
+@client.command()
+async def meme():
+    data = urllib.request.urlopen("https://meme-api.herokuapp.com/gimme").read()
+    meme = json.loads(data)["url"]
+    print('Sending meme to chat')
+    await client.say("meme review :clap: :clap:" + " " + meme)
+
+
+client.run('put your token here')
 
