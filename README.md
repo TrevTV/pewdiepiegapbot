@@ -8,6 +8,16 @@ Using the command !subcount {youtubername} and will display the number.
 
 To get a random meme type !meme.
 
+Play music in voice channel !play {yt url}.
+
+Get the bot out of voice chat by typing !leave.
+
+Pause music with !pause.
+
+Resume dat paused music with !resume.
+
+Get sent a list of commands with !commands.
+
 # programmy peeps
 
-So yeah, coded by TrevTV (http://www.youtube.com/trevoraxe) and discord.py.
+coded by TrevTV (http://www.youtube.com/trevoraxe) and discord.py.
