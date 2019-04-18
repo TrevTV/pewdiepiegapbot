@@ -8,15 +8,9 @@ Using the command !subcount {youtubername} and will display the number.
 
 To get a random meme type !meme.
 
-Play music in voice channel !play {yt url}.
+Get dumb trump quotes by typing !trump.
 
-Get the bot out of voice chat by typing !leave.
-
-Pause music with !pause.
-
-Resume dat paused music with !resume.
-
-Get sent a list of commands with !commands.
+Get sent a list of commands with !help.
 
 # programmy peeps
 
