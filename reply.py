@@ -1,22 +1,12 @@
-import discord
 from discord.ext import commands
-import importlib
 import urllib.request
-import json
+import importlib
+import discord
 import count
-players = {}
-pp = 0
+import json
 yt = 'null'
-if count.p > count.t:
-    w = "PewDiePie"
-else:
-    w = "T-Series"
-
 
 client = commands.Bot(command_prefix='!')
-
-# Startup
-
 
 @client.event
 async def on_ready():
@@ -25,86 +15,63 @@ async def on_ready():
     print('-----------')
 
 # Commands
-
-
 @client.command()
 async def gap():
     importlib.reload(count)
     print("Sending the gap to chat")
-    await client.say('The gap is currently at' + ' ' + str(count.a) + " " + 'with' + " " + str(w) + " " + "winning!")
+    await client.say('The gap is currently at' + ' ' + str(count.a) + "!")
 
+client.remove_command("help")
 
 @client.command(pass_context=True)
-async def commands(ctx):
+async def help(ctx):
     author = ctx.message.author
-    await client.send_message(author, "Current Commands: \n !gap : Displays the gap between PewDiePie and T-Series. \n "
-                                      "!subcount {youtuber} : Can display the subscriber count of a specified YouTuber."
-                                      "\n !meme : Displays a meme from reddit. \n \n !play {youtube url} : Can play mus"
-                                      "ic to channel (must already be in voice channel). \n !leave : Makes bot leave it"
-                                      "s current voice channel. \n !pause : Pauses currently playing music. \n !resu"
-                                      "me : Resumes currently paused music.")
-    await client.say("You should have received it in a private message. If you do not see it you have have direct mess"
-                     "ages from users disabled.")
+    try:
+        embed=discord.Embed(title="Commands", description="Here are the commands:", color=0xF9013F)
+        embed.add_field(name="!help", value="What do you think?", inline=True)
+        embed.add_field(name="!gap", value="Displays the gap between PewDiePie and T-Series.", inline= True)
+        embed.add_field(name="!subcount {youtuber}", value="Displays the subscriber count of a specified YouTuber.", inline= True)
+        embed.add_field(name="!meme", value="Displays a meme from reddit.", inline= True)
+        embed.add_field(name="!trump", value="Displays a dumb trump quote.", inline= True)
+        await client.send_message(author, embed=embed)
+        print("Sent commands to " + str(author))
+        await client.say("The command list has been sent to your PMs.")
+    except:
+        await client.say("It seems that you have disabled private messages to server members. I cannot send the list without that permission.")
+        print("Failed sending commands to " + str(author))
 
-
+sarg = "impropercmdusage"
 @client.command()
-async def subcount(arg):
-    key = "put your google api key here"
-    yt = arg
-    data = urllib.request.urlopen(
-        "https://www.googleapis.com/youtube/v3/channels?part=statistics&forUsername=" + str(yt) + "&key=" + key).read()
-    subs = json.loads(data)["items"][0]["statistics"]["subscriberCount"]
-    pp = "{:,d}".format(int(subs))
-    pp = pp.replace(',', '')
-    pp = int(pp)
-    print('Sending' + " " + yt + "'s" + " " + "to chat")
-    await client.say(str(yt) + " " + 'is currently at' + " " + str(pp) + " " + 'subscribers.')
+async def subcount(sarg):
+        key = "youtube api v3 key here"
+        yt = sarg
+        pp = 0
+        data = urllib.request.urlopen(
+            "https://www.googleapis.com/youtube/v3/channels?part=statistics&forUsername=" + str(yt) + "&key=" + key).read()
+        subs = json.loads(data)["items"][0]["statistics"]["subscriberCount"]
+        pp = "{:,d}".format(int(subs))
+        pp = pp.replace(',', '')
+        pp = int(pp)
+        await client.say(str(yt) + " " + 'is currently at' + " " + str(pp) + " " + 'subscribers.')
+        print('Sending' + " " + yt + "'s" + " subcount" + " to chat")
 
 
 @client.command()
 async def meme():
-    data = urllib.request.urlopen("https://meme-api.herokuapp.com/gimme").read()
-    meme = json.loads(data)["url"]
+    memedata = urllib.request.urlopen("https://meme-api.herokuapp.com/gimme").read()
+    memeu = json.loads(memedata)["url"]
+    memet = json.loads(memedata)["title"]
     print('Sending meme to chat')
-    await client.say("meme review :clap: :clap:" + " " + meme)
+    memee=discord.Embed(title=memet, description="meme review :clap: :clap:", color=0xF9013F)
+    memee.set_image(url=memeu)
+    await client.say(embed=memee)
 
-# MUSIC BOT PART #
-# NOTE: MUST HAVE FFMPEG INSTALLED FOR THE MUSIC BOT TO WORK #
-
-
-@client.command(pass_context=True)
-async def play(ctx, url):
-    channel = ctx.message.author.voice.voice_channel
-    await client.join_voice_channel(channel)
-    server = ctx.message.server
-    voice_client = client.voice_client_in(server)
-    player = await voice_client.create_ytdl_player(url)
-    players[server.id] = player
-    player.start()
-    print("Bot has started playing music in a channel")
+@client.command()
+async def trump():
+    quotedata = urllib.request.urlopen("https://api.whatdoestrumpthink.com/api/v1/quotes/random").read()
+    quote = json.loads(quotedata)["message"]
+    print("Sending Trump quote to chat")
+    await client.say("Dumb Trump quote on the way!" + " " + '"' + quote + '"')
 
 
-@client.command(pass_context=True)
-async def leave(ctx):
-    server = ctx.message.server
-    voice_client = client.voice_client_in(server)
-    await voice_client.disconnect()
-    print("Bot has left a channel")
-
-
-@client.command(pass_context=True)
-async def pause(ctx):
-    id = ctx.message.server.id
-    players[id].pause()
-
-
-@client.command(pass_context=True)
-async def resume(ctx):
-    id = ctx.message.server.id
-    players[id].resume()
-
-# END OF MUSIC BOT #
-
-
-client.run('put your discord bot token here')
-
+client.run('token here')
