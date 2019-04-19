@@ -12,6 +12,10 @@ Get dumb trump quotes by typing !trump.
 
 Get sent a list of commands with !help.
 
+Start a poll with !quickpoll {title} {option} {option} (you can have more than two options)
+
+Tally votes for polls with !tally {pollid}
+
 # programmy peeps
 
 coded by TrevTV (http://www.youtube.com/trevoraxe) and discord.py.
