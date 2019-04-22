@@ -16,6 +16,10 @@ Start a poll with !quickpoll {title} {option} {option} (you can have more than t
 
 Tally votes for polls with !tally {pollid}
 
+Find a Urban Dictionary definition of any word using !urban {word}.
+
+Turn normal talk into owo using !owo {text}.
+
 # programmy peeps
 
 coded by TrevTV (http://www.youtube.com/trevoraxe) and discord.py.
