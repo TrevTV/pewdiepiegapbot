@@ -1,10 +1,11 @@
 import urllib.request
+from config import Config
 import json
-import time
 
+cfg = Config(open('config.cfg'))
 a = 0
 
-key = "Put your Google API key here"
+key = cfg.ytapi
 
 
 name = "PewDiePie"
