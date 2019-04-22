@@ -1,3 +1,4 @@
+# all keys in this file are used for refrence, they wont work
 from discord.ext import commands
 import urllib.request
 import importlib
