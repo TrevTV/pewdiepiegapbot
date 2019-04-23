@@ -4,20 +4,21 @@ import urllib.request
 import importlib
 import discord
 import count
+import time
 import json
 
 cfg = Config(open('config.cfg'))
 
-class util:
+class util(commands.Cog, name='Utilities'):
     def __init__(self, client):
         self.client = client
         self.client.remove_command("help")
 
     @commands.command()
-    async def gap(self):
+    async def gap(self, ctx):
         importlib.reload(count)
         print("Sending the gap to chat")
-        await self.client.say('The gap is currently at' + ' ' + str(count.a) + "!")
+        await ctx.send('The gap is currently at' + ' ' + str(count.a) + "!")
 
     @commands.command(pass_context=True)
     async def help(self, ctx):
@@ -31,17 +32,17 @@ class util:
             embed.add_field(name="!trump", value="Displays a dumb trump quote.", inline= True)
             embed.add_field(name="!quickpoll {title} {option} {option}", value="Starts a poll, it can have more than two options", inline= True)
             embed.add_field(name="!tally {pollid}", value="Tallys votes from a poll.", inline= True)
-            embed.add_field(name="!urban {word}", value="Searches the Urban Dictionary for a specified word.", inline= True)
-			embed.add_field(name="!owo {sentence}", value="Turns the sentence into owo talk.", inline= True)
-            await self.client.send_message(author, embed=embed)
+            embed.add_field(name="!urban {word}", value="Searches the Urban Dictionary for a specified word. Only works in NSFW channels.", inline= True)
+            await author.send(embed=embed)
             print("Sent commands to " + str(author))
-            await self.client.say("The command list has been sent to your PMs.")
+            await ctx.send("The command list has been sent to your PMs.")
         except:
-            await self.client.say(embed=embed)
+            await ctx.send(embed=embed)
+            print("Sent help to chat.")
 
     @commands.command()
-    async def subcount(self, sarg):
-        key = "AIzaSyASRlUYVQPbu15YC_tRFG5TfBx8Vwdi4fg"
+    async def subcount(self, ctx, sarg):
+        key = cfg.ytapi
         yt = sarg
         pp = 0
         data = urllib.request.urlopen(
@@ -50,7 +51,7 @@ class util:
         pp = "{:,d}".format(int(subs))
         pp = pp.replace(',', '')
         pp = int(pp)
-        await self.client.say(str(yt) + " " + 'is currently at' + " " + str(pp) + " " + 'subscribers.')
+        await ctx.send(str(yt) + " " + 'is currently at' + " " + str(pp) + " " + 'subscribers.')
         print('Sending' + " " + yt + "'s" + " subcount" + " to chat")
 
 
