@@ -9,8 +9,9 @@ class fun(commands.Cog, name='Fun'):
 
 
     @commands.command()
-    async def urban(self, ctx, arg):
-        term = urllib.request.urlopen("http://api.urbandictionary.com/v0/define?term=" + str(arg)).read()
+    async def urban(self, ctx, *, arg):
+        word = arg.replace(" ", "+")
+        term = urllib.request.urlopen("http://api.urbandictionary.com/v0/define?term=" + str(word)).read()
         defi = json.loads(term)["list"][0]["definition"]
         word = json.loads(term)["list"][0]["word"]
         exam = json.loads(term)["list"][0]["example"]
@@ -41,11 +42,54 @@ class fun(commands.Cog, name='Fun'):
         print('Sending meme to chat')
 
     @commands.command()
-    async def owo(self, ctx, arg):
+    async def owo(self, ctx, *, arg):
         from TextToOwO import owo
         tahowo = owo.text_to_owo(arg)
         await ctx.send(tahowo)
         print("Owooing " + arg)
+
+    @commands.command()
+    async def trivia(self, ctx):
+        triv = urllib.request.urlopen("https://opentdb.com/api.php?amount=1&difficulty=medium&type=boolean").read()
+        question = json.loads(triv)['results'][0]['question']
+        answer = json.loads(triv)['results'][0]['correct_answer']
+        question = question.replace('&#039;', "'")
+        question = question.replace('&quot;', '"')
+        question = question.replace('&minus;', "-")
+        embed=discord.Embed(title="Trivia", description="True or False? " + question, color=0xF9013F)
+        await ctx.send(embed=embed)
+        print("Sent trivia question to chat.")
+        msg = await self.client.wait_for('message', check=lambda message: message.author == ctx.author)
+        if msg:
+            while msg.content.lower() not in ['true', 'false']:
+                await ctx.send("Please only choose true or false.")
+            if msg.content.lower() == answer.lower():
+                await ctx.send('Correct!')
+            elif msg.content.lower() != answer.lower():
+                await ctx.send('Incorrect. The correct answer was ' + answer.lower() + ".")
+
+    @commands.command()
+    async def echo(self, ctx, *, arg):
+        await ctx.send(arg)
+
+    @commands.command()
+    async def clapify(self, ctx, *, arg):
+        clap = arg.replace(" ", "👏")
+        await ctx.send(clap)
+
+    @commands.command()
+    async def cat(self, ctx):
+        cat = urllib.request.urlopen("http://aws.random.cat/meow").read()
+        cati = json.loads(cat)['file']
+        cat=discord.Embed(title='Random Cat', description="Cats are cute.", color=0xF9013F)
+        cat.set_image(url=cati)
+        await ctx.send(embed=cat)
+
+    @commands.command()
+    async def lenny(self, ctx):
+        lenny = urllib.request.urlopen("https://api.lenny.today/v1/random?limit=1").read()
+        lenni = json.loads(lenny)[0]['face']
+        await ctx.send(lenni)
 
 
 def setup(client):
