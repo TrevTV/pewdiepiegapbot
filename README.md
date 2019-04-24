@@ -20,6 +20,8 @@ Find a Urban Dictionary definition of any word using !urban {word}.
 
 Turn normal talk into owo using !owo {text}.
 
+I am not updating this readme so for a full list of commands go [here](http://gaplk.gq/commands.html)
+
 # programmy peeps
 
 coded by TrevTV (http://www.youtube.com/trevoraxe) and discord.py.
