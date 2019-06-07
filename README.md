@@ -1,3 +1,8 @@
+# Attention!
+I have decided to end the ThankYouPewDiePie bot. I had fun creating it but the war is over. I hope my bad, messy code may be able to help some beginners. If you want a bot like ThankYouPewDiePie check out my new bot "Vex"! [Click Here to invite it!](https://discordapp.com/api/oauth2/authorize?client_id=583089980134522941&permissions=8&scope=bot)
+&nbsp;
+
+
 # PewDiePie Gap Bot
 A Discord bot that displays the gap between PewDiePie and T-Series but with terrible coding because I suck at Python.
 
